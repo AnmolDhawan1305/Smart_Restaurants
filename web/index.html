@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>HomePage</title>
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+	<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.4.1/css/all.css" integrity="sha384-5sAR7xN1Nv6T6+dT2mhtzEpVJvfS3NScPQTrOxhwjIuvcA67KV2R5Jz6kr4abQsz" crossorigin="anonymous">
+	<script src="https://code.jquery.com/jquery-2.1.4.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>	
+	<style type="text/css">
+		.yes{
+			padding-top: 70px;
+			text-align: center;
+		}
+		body{
+			height: 100%;
+			background: url("images/home-bg-02.jpg");
+			/*background-position: center;*/
+			background-repeat: no-repeat;
+			background-size: cover;
+		}
+		#in{
+			text-align: center;
+			padding-top: 11%;
+		}
+		#back{
+			background-color: #edb056;
+			color: black;
+			width: 100px;
+			height: 30px;
+		}
+	</style>
+</head>
+<body>
+	<nav class="navbar navbar-inverse navbar-fixed-top">
+		<div class="container">
+			<div class="navbar-header">
+				 <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-nav-demo" aria-expanded="false">
+	        <span class="sr-only">Toggle navigation</span>
+	        <span class="icon-bar"></span>
+	        <span class="icon-bar"></span>
+	        <span class="icon-bar"></span>
+	      </button>
+				<a href="#" class="navbar-brand"><i class="fas fa-utensils"></i>Mocha</a>
+			</div>
+			<div class="collapse navbar-collapse" id="bs-nav-demo">
+				<ul class="nav navbar-nav">
+					<li><a href="index.html">Home</a></li>
+					<li><a href="about.html">About</a></li>
+					<li><a href="Contact.html">Contact</a></li>
+				</ul>
+				<ul class="nav navbar-nav navbar-right">
+					<li><a href="sign_in.jsp"><i class="fas fa-user"></i> Sign in</a></li>
+				</ul>
+			</div>
+		</div>
+	</nav>
+<div class="row">
+	<div class="col-lg-12 yes"><h1>Mocha Restaurant & Bar</h1></div>
+	<div class="col-lg-12">
+		<form action="Menu.jsp" method="post" id="in">
+			<label><font size="4px">Enter Table Number</font> &nbsp;&nbsp;&nbsp; 
+				<input type="text" name="tableN" id="back">
+			</label><br>
+                        <a href="Menu.jsp"><button type="button" class="btn btn-warning"><font color="black">Proceed <i class="fas fa-arrow-right"></i></font></button></a>
+		</form>
+	</div>	
+</div>
+</body>
+</html>
