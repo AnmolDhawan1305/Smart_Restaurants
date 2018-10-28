@@ -22,6 +22,12 @@
         width: 350px;
         padding-top: 10px;
     }
+    body{
+        background: #544a7d;  /* fallback for old browsers */
+background: -webkit-linear-gradient(to right, #ffd452, #544a7d);  /* Chrome 10-25, Safari 5.1-6 */
+background: linear-gradient(to right, #ffd452, #544a7d); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
+
+    }
 </style>
     </head>
     <body>
@@ -68,6 +74,7 @@
                     &nbsp; &nbsp;
                     <td><input type="text" name="t1" value="" style="width: 150px"></td>
                 </tr>
+                
                 <tr>
                    <th style="padding-left: 30px">Enter Password</th>
                     <td><input type="password" align="center" name="t2" value="" style="width: 150px"></td> 
