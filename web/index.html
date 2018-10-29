@@ -61,9 +61,14 @@
 			<label><font size="4px">Enter Table Number</font> &nbsp;&nbsp;&nbsp; 
 				<input type="text" name="tableN" id="back">
 			</label><br>
-                        <a href="Menu.jsp"><button type="button" class="btn btn-warning"><font color="black">Proceed <i class="fas fa-arrow-right"></i></font></button></a>
+                        <button type="button" class="btn btn-warning"><font color="black">Proceed <i class="fas fa-arrow-right"></i></font></button>
 		</form>
 	</div>	
 </div>
+    <script type="text/javascript">
+        $("button").click(function(){
+           document.forms[0].submit(); 
+        });
+        </script>
 </body>
 </html>
