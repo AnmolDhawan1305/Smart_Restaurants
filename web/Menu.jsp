@@ -17,6 +17,13 @@
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>	
         <title>Menu</title>
         <style type="text/css">
+            body{
+background: #2193b0;  /* fallback for old browsers */
+background: -webkit-linear-gradient(to right, #6dd5ed, #2193b0);  /* Chrome 10-25, Safari 5.1-6 */
+background: linear-gradient(to right, #6dd5ed, #2193b0); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
+
+            }
+            
             h1{
                 margin-top: 5%;
                 text-align: center;
@@ -48,12 +55,22 @@
             #disp{
                 display: none;
             }
+            .igreen{
+                color: green;
+                
+            }
+            .ired{
+                color: red;
+            }
+            .t{
+                padding-left: 5%;
+            }
         </style>
     </head>
     <body>
         <%
-          //  session.setAttribute(request.getParameter("tableN"), "Menu.jsp");
-          
+            
+            session.setAttribute("tableno",request.getParameter("tableN"));
             %>
         <nav class="navbar navbar-inverse navbar-fixed-top">
 		<div class="container">
@@ -79,7 +96,7 @@
 		</div>
 	</nav>
         <div class="container">
-            <form action="Menu.jsp" method="get">
+            <form action="Menu.jsp" method="post">
             <h1>Menu</h1><br>
             <div id="rad">
                 <label>
@@ -128,14 +145,18 @@
                         ResultSet rs2=DBL.DBlayer.getResult("select distinct item_type from menu1");
                         while(rs2.next()){
                             out.print("<h1>"+rs2.getString(1)+"</h1><br><div class='submenu'>");
-                            out.print("<div class='row'><h3><div class='col-lg-3'>Item</div><div class='col-lg-2'>Price</div><div class='col-lg-4 left'>Select</div></h3></div><br>");
+                            out.print("<div class='row'><h3><div class='col-lg-3 t'>Item</div><div class='col-lg-2'>Price</div><div class='col-lg-4 left'>Select</div></h3></div><br>");
                             ResultSet rs3=DBL.DBlayer.getResult("select * from menu1 where item_type='"+rs2.getString(1)+"'");
                             while(rs3.next()){
-                                if( request.getParameter(rs3.getString(1))!=null && request.getParameter(rs3.getString(1)).equals("1"))
-                                    out.print("<div class='row'><h4><div class='col-lg-3'>"+rs3.getString(2)+"</div>&nbsp;&nbsp;<div class='col-lg-2'>"+rs3.getString(4)+"</div>&nbsp;&nbsp;<div class='col-lg-4'>"+"<input type='checkbox'"+" name='"+rs3.getString(1)+"' value='1' checked></div></h4></div>");                                                    
-                                else
-                                    out.print("<div class='row'><h4><div class='col-lg-3'>"+rs3.getString(2)+"</div>&nbsp;&nbsp;<div class='col-lg-2'>"+rs3.getString(4)+"</div>&nbsp;&nbsp;<div class='col-lg-4'>"+"<input type='checkbox'"+" name='"+rs3.getString(1)+"' value='1'></div></h4></div>");   
-                                out.print("<br>");
+                                if( request.getParameter(rs3.getString(1))!=null && request.getParameter(rs3.getString(1)).equals("1")){
+                                        out.print("<div class='row'><h4><div class='col-lg-3'><i class='fas fa-circle igreen'></i> &nbsp; &nbsp;"+rs3.getString(2)+"</div>&nbsp;&nbsp;<div class='col-lg-2'>"+rs3.getString(4)+"</div>&nbsp;&nbsp;<div class='col-lg-4'>"+"<input type='checkbox'"+" name='"+rs3.getString(1)+"' value='1' checked></div></h4></div>");                                                    
+                                
+                                }
+                                else{
+                                    if(rs3.getString(5).equals("1")) out.print("<div class='row'><h4><div class='col-lg-3'><span><i class='fas fa-circle igreen'></i></span> &nbsp; &nbsp;"+rs3.getString(2)+"</div>&nbsp;&nbsp;<div class='col-lg-2'>"+rs3.getString(4)+"</div>&nbsp;&nbsp;<div class='col-lg-4'>"+"<input type='checkbox'"+" name='"+rs3.getString(1)+"' value='1'></div></h4></div>");                                                    
+                                    else out.print("<div class='row'><h4><div class='col-lg-3'><span><i class='fas fa-circle ired'></i></span> &nbsp; &nbsp;"+rs3.getString(2)+"</div>&nbsp;&nbsp;<div class='col-lg-2'>"+rs3.getString(4)+"</div>&nbsp;&nbsp;<div class='col-lg-4'>"+"<input type='checkbox'"+" name='"+rs3.getString(1)+"' value='1' disabled></div></h4></div>");                                                     
+                                }
+                                 out.print("<br>");
                                // k++;
                             }
                             out.print("</div>");
@@ -143,30 +164,38 @@
                     }
                     else{
                        // int y=1;
-                       ResultSet rs2=DBL.DBlayer.getResult("select distinct item_type from menu1");
+                      ResultSet rs2=DBL.DBlayer.getResult("select distinct item_type from menu1");
                         while(rs2.next()){
                             out.print("<div id='disp'>");
-                            out.print("<h1>"+rs2.getString(1)+"</h1><br><div class='submenu' >");
-                            out.print("<div class='row'><h3><div class='col-lg-3'>Item</div><div class='col-lg-2'>Price</div><div class='col-lg-4 left'>Select</div></h3></div><br>");
+                            out.print("<h1>"+rs2.getString(1)+"</h1><br><div class='submenu'>");
+                            out.print("<div class='row'><h3><div class='col-lg-3 t'>Item</div><div class='col-lg-2'>Price</div><div class='col-lg-4 left'>Select</div></h3></div><br>");
                             ResultSet rs3=DBL.DBlayer.getResult("select * from menu1 where item_type='"+rs2.getString(1)+"'");
                             while(rs3.next()){
-                                if( request.getParameter(rs3.getString(1))!=null && request.getParameter(rs3.getString(1)).equals("1"))
-                                    out.print("<div class='row'><h4><div class='col-lg-3'>"+rs3.getString(2)+"</div>&nbsp;&nbsp;<div class='col-lg-2'>"+rs3.getString(4)+"</div>&nbsp;&nbsp;<div class='col-lg-4'>"+"<input type='checkbox'"+" name='"+rs3.getString(1)+"' value='1' checked></div></h4></div>");                                                    
-                                else
-                                    out.print("<div class='row'><h4><div class='col-lg-3'>"+rs3.getString(2)+"</div>&nbsp;&nbsp;<div class='col-lg-2'>"+rs3.getString(4)+"</div>&nbsp;&nbsp;<div class='col-lg-4'>"+"<input type='checkbox'"+" name='"+rs3.getString(1)+"' value='1'></div></h4></div>");   
-                                out.print("<br>");
+                                if( request.getParameter(rs3.getString(1))!=null && request.getParameter(rs3.getString(1)).equals("1")){
+                                        out.print("<div class='row'><h4><div class='col-lg-3'><i class='fas fa-circle igreen'></i> &nbsp; &nbsp;"+rs3.getString(2)+"</div>&nbsp;&nbsp;<div class='col-lg-2'>"+rs3.getString(4)+"</div>&nbsp;&nbsp;<div class='col-lg-4'>"+"<input type='checkbox'"+" name='"+rs3.getString(1)+"' value='1' checked></div></h4></div>");                                                    
+                                
+                                }
+                                else{
+                                    if(rs3.getString(5).equals("1")) out.print("<div class='row'><h4><div class='col-lg-3'><span><i class='fas fa-circle igreen'></i></span> &nbsp; &nbsp;"+rs3.getString(2)+"</div>&nbsp;&nbsp;<div class='col-lg-2'>"+rs3.getString(4)+"</div>&nbsp;&nbsp;<div class='col-lg-4'>"+"<input type='checkbox'"+" name='"+rs3.getString(1)+"' value='1'></div></h4></div>");                                                    
+                                    else out.print("<div class='row'><h4><div class='col-lg-3'><span><i class='fas fa-circle ired'></i></span> &nbsp; &nbsp;"+rs3.getString(2)+"</div>&nbsp;&nbsp;<div class='col-lg-2'>"+rs3.getString(4)+"</div>&nbsp;&nbsp;<div class='col-lg-4'>"+"<input type='checkbox'"+" name='"+rs3.getString(1)+"' value='1' disabled></div></h4></div>");                                                     
+                                }
+                                 out.print("<br>");
                                // k++;
                             }
                             out.print("</div></div>");
                         }
                         out.print("<h1>"+request.getParameter("s")+"</h1><br><div class='submenu'>");
-                            out.print("<div class='row'><h3><div class='col-lg-3'>Item</div><div class='col-lg-2'>Price</div><div class='col-lg-4 left'>Select</div></h3></div><br>");
+                            out.print("<div class='row'><h3><div class='col-lg-3 t'>Item</div><div class='col-lg-2'>Price</div><div class='col-lg-4 left'>Select</div></h3></div><br>");
                             ResultSet rs4=DBL.DBlayer.getResult("select * from menu1 where item_type='"+request.getParameter("s")+"'");
                             while(rs4.next()){
-                               if( request.getParameter(rs4.getString(1))!=null && request.getParameter(rs4.getString(1)).equals("1"))
-                                    out.print("<div class='row'><h4><div class='col-lg-3'>"+rs4.getString(2)+"</div>&nbsp;&nbsp;<div class='col-lg-2'>"+rs4.getString(4)+"</div>&nbsp;&nbsp;<div class='col-lg-4'>"+"<input type='checkbox'"+" name='"+rs4.getString(1)+"' value='1' checked></div></h4></div>");                                                    
-                                else
-                                    out.print("<div class='row'><h4><div class='col-lg-3'>"+rs4.getString(2)+"</div>&nbsp;&nbsp;<div class='col-lg-2'>"+rs4.getString(4)+"</div>&nbsp;&nbsp;<div class='col-lg-4'>"+"<input type='checkbox'"+" name='"+rs4.getString(1)+"' value='1'></div></h4></div>");   
+                              if( request.getParameter(rs4.getString(1))!=null && request.getParameter(rs4.getString(1)).equals("1")){
+                                        out.print("<div class='row'><h4><div class='col-lg-3'><i class='fas fa-circle igreen'></i> &nbsp; &nbsp;"+rs4.getString(2)+"</div>&nbsp;&nbsp;<div class='col-lg-2'>"+rs4.getString(4)+"</div>&nbsp;&nbsp;<div class='col-lg-4'>"+"<input type='checkbox'"+" name='"+rs4.getString(1)+"' value='1' checked></div></h4></div>");                                                    
+                                
+                                }
+                                else{
+                                    if(rs4.getString(5).equals("1")) out.print("<div class='row'><h4><div class='col-lg-3'><span><i class='fas fa-circle igreen'></i></span> &nbsp; &nbsp;"+rs4.getString(2)+"</div>&nbsp;&nbsp;<div class='col-lg-2'>"+rs4.getString(4)+"</div>&nbsp;&nbsp;<div class='col-lg-4'>"+"<input type='checkbox'"+" name='"+rs4.getString(1)+"' value='1'></div></h4></div>");                                                    
+                                    else out.print("<div class='row'><h4><div class='col-lg-3'><span><i class='fas fa-circle ired'></i></span> &nbsp; &nbsp;"+rs4.getString(2)+"</div>&nbsp;&nbsp;<div class='col-lg-2'>"+rs4.getString(4)+"</div>&nbsp;&nbsp;<div class='col-lg-4'>"+"<input type='checkbox'"+" name='"+rs4.getString(1)+"' value='1' disabled></div></h4></div>");                                                     
+                                }
                                 out.print("<br>");
                                // y++;
                             }
@@ -176,27 +205,35 @@
                       ResultSet rs2=DBL.DBlayer.getResult("select distinct item_type from menu1");
                         while(rs2.next()){
                             out.print("<div id='disp'>");
-                            out.print("<h1>"+rs2.getString(1)+"</h1><br><div class='submenu' >");
-                            out.print("<div class='row'><h3><div class='col-lg-3'>Item</div><div class='col-lg-2'>Price</div><div class='col-lg-4 left'>Select</div></h3></div><br>");
+                            out.print("<h1>"+rs2.getString(1)+"</h1><br><div class='submenu'>");
+                            out.print("<div class='row'><h3><div class='col-lg-3 t'>Item</div><div class='col-lg-2'>Price</div><div class='col-lg-4 left'>Select</div></h3></div><br>");
                             ResultSet rs3=DBL.DBlayer.getResult("select * from menu1 where item_type='"+rs2.getString(1)+"'");
                             while(rs3.next()){
-                                if( request.getParameter(rs3.getString(1))!=null && request.getParameter(rs3.getString(1)).equals("1"))
-                                    out.print("<div class='row'><h4><div class='col-lg-3'>"+rs3.getString(2)+"</div>&nbsp;&nbsp;<div class='col-lg-2'>"+rs3.getString(4)+"</div>&nbsp;&nbsp;<div class='col-lg-4'>"+"<input type='checkbox'"+" name='"+rs3.getString(1)+"' value='1' checked></div></h4></div>");                                                    
-                                else
-                                    out.print("<div class='row'><h4><div class='col-lg-3'>"+rs3.getString(2)+"</div>&nbsp;&nbsp;<div class='col-lg-2'>"+rs3.getString(4)+"</div>&nbsp;&nbsp;<div class='col-lg-4'>"+"<input type='checkbox'"+" name='"+rs3.getString(1)+"' value='1'></div></h4></div>");   
-                                out.print("<br>");
+                                if( request.getParameter(rs3.getString(1))!=null && request.getParameter(rs3.getString(1)).equals("1")){
+                                        out.print("<div class='row'><h4><div class='col-lg-3'><i class='fas fa-circle igreen'></i> &nbsp; &nbsp;"+rs3.getString(2)+"</div>&nbsp;&nbsp;<div class='col-lg-2'>"+rs3.getString(4)+"</div>&nbsp;&nbsp;<div class='col-lg-4'>"+"<input type='checkbox'"+" name='"+rs3.getString(1)+"' value='1' checked></div></h4></div>");                                                    
+                                
+                                }
+                                else{
+                                    if(rs3.getString(5).equals("1")) out.print("<div class='row'><h4><div class='col-lg-3'><span><i class='fas fa-circle igreen'></i></span> &nbsp; &nbsp;"+rs3.getString(2)+"</div>&nbsp;&nbsp;<div class='col-lg-2'>"+rs3.getString(4)+"</div>&nbsp;&nbsp;<div class='col-lg-4'>"+"<input type='checkbox'"+" name='"+rs3.getString(1)+"' value='1'></div></h4></div>");                                                    
+                                    else out.print("<div class='row'><h4><div class='col-lg-3'><span><i class='fas fa-circle ired'></i></span> &nbsp; &nbsp;"+rs3.getString(2)+"</div>&nbsp;&nbsp;<div class='col-lg-2'>"+rs3.getString(4)+"</div>&nbsp;&nbsp;<div class='col-lg-4'>"+"<input type='checkbox'"+" name='"+rs3.getString(1)+"' value='1' disabled></div></h4></div>");                                                     
+                                }
+                                 out.print("<br>");
                                // k++;
                             }
                             out.print("</div></div>");
                         }
                       out.print("<br><div class='submenu'>");
-                            out.print("<div class='row'><h3><div class='col-lg-3'>Item</div><div class='col-lg-2'>Price</div><div class='col-lg-4 left'>Select</div></h3></div><br>");
+                            out.print("<div class='row'><h3><div class='col-lg-3 t'>Item</div><div class='col-lg-2'>Price</div><div class='col-lg-4 left'>Select</div></h3></div><br>");
                             ResultSet rs4=DBL.DBlayer.getResult("select * from menu1 where item_name like '%"+request.getParameter("t")+"%'");
                             while(rs4.next()){
-                               if( request.getParameter(rs4.getString(1))!=null && request.getParameter(rs4.getString(1)).equals("1"))
-                                    out.print("<div class='row'><h4><div class='col-lg-3'>"+rs4.getString(2)+"</div>&nbsp;&nbsp;<div class='col-lg-2'>"+rs4.getString(4)+"</div>&nbsp;&nbsp;<div class='col-lg-4'>"+"<input type='checkbox'"+" name='"+rs4.getString(1)+"' value='1' checked></div></h4></div>");                                                    
-                                else
-                                    out.print("<div class='row'><h4><div class='col-lg-3'>"+rs4.getString(2)+"</div>&nbsp;&nbsp;<div class='col-lg-2'>"+rs4.getString(4)+"</div>&nbsp;&nbsp;<div class='col-lg-4'>"+"<input type='checkbox'"+" name='"+rs4.getString(1)+"' value='1'></div></h4></div>");   
+                               if( request.getParameter(rs4.getString(1))!=null && request.getParameter(rs4.getString(1)).equals("1")){
+                                        out.print("<div class='row'><h4><div class='col-lg-3'><i class='fas fa-circle igreen'></i> &nbsp; &nbsp;"+rs4.getString(2)+"</div>&nbsp;&nbsp;<div class='col-lg-2'>"+rs4.getString(4)+"</div>&nbsp;&nbsp;<div class='col-lg-4'>"+"<input type='checkbox'"+" name='"+rs4.getString(1)+"' value='1' checked></div></h4></div>");                                                    
+                                
+                                }
+                                else{
+                                    if(rs4.getString(5).equals("1")) out.print("<div class='row'><h4><div class='col-lg-3'><span><i class='fas fa-circle igreen'></i></span> &nbsp; &nbsp;"+rs4.getString(2)+"</div>&nbsp;&nbsp;<div class='col-lg-2'>"+rs4.getString(4)+"</div>&nbsp;&nbsp;<div class='col-lg-4'>"+"<input type='checkbox'"+" name='"+rs4.getString(1)+"' value='1'></div></h4></div>");                                                    
+                                    else out.print("<div class='row'><h4><div class='col-lg-3'><span><i class='fas fa-circle ired'></i></span> &nbsp; &nbsp;"+rs4.getString(2)+"</div>&nbsp;&nbsp;<div class='col-lg-2'>"+rs4.getString(4)+"</div>&nbsp;&nbsp;<div class='col-lg-4'>"+"<input type='checkbox'"+" name='"+rs4.getString(1)+"' value='1' disabled></div></h4></div>");                                                     
+                                }
                                 out.print("<br>");
                                // y++;
                             }
