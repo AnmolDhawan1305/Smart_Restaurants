@@ -3,7 +3,8 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-
+var temp=$(".sr");
+for(var i=0;i<temp.length;i++) temp[i].value=i+1+"."; 
 var total=Number(0);
 var x=$(".prc");
 for(var i=0;i<x.length;i++) total+=Number(x[i].value);
@@ -28,10 +29,22 @@ $(".ms").on("click",function(){
    // alert(t);
     if(t>1){
     $("input[name=t"+i+"]").val((t-1)+"");
-    //var p=Number($("input[name=p"+i+"]").val());
     var u=Number($("input[name=u"+i+"]").val());
     $("input[name=p"+i+"]").val(u*(t-1)+"");
      total-=u;
     $("input[name=total]").val(total+"");
     }
 });
+$("input[type=checkbox]").on("click",function(){
+   var i=this.name;
+   i=i.substring(1);
+   //alert(i);
+   total-=$("input[name=p"+i+"]").val();
+   $("input[name=total]").val(total+"");
+   $("#r"+i).remove();
+   fun();
+});
+function fun(){
+   var tempf=$(".sr");
+for(var i=0;i<tempf.length;i++) tempf[i].value=i+1+"."; 
+}

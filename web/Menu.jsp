@@ -96,7 +96,7 @@ background: linear-gradient(to right, #6dd5ed, #2193b0); /* W3C, IE 10+/ Edge, F
 		</div>
 	</nav>
         <div class="container">
-            <form action="Menu.jsp" method="post">
+            <form action="Menu.jsp" method="get">
             <h1>Menu</h1><br>
             <div id="rad">
                 <label>
@@ -134,7 +134,7 @@ background: linear-gradient(to right, #6dd5ed, #2193b0); /* W3C, IE 10+/ Edge, F
                    out.print("<input type='text' name='t' placeholder='Search here!' class='togg' value='"+request.getParameter("t")+"'>");
                 %>
                 &nbsp;<button id="search"><i class="fas fa-search"></i></button>
-                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<button type="button" class="btn btn-warning"><font color="black">Proceed <i class="fas fa-arrow-right"></i></font></button>
+                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<button type="button" class="btn btn-warning" id="sub"><font color="black">Proceed <i class="fas fa-arrow-right"></i></font></button>
             </div>
           
                 <br>
@@ -269,7 +269,11 @@ background: linear-gradient(to right, #6dd5ed, #2193b0); /* W3C, IE 10+/ Edge, F
             $("#search").click(function(){
                 document.forms[0].submit();
             });
-           
+           $("#sub").click(function(){
+               document.forms[0].action="OrderView.jsp";
+               document.forms[0].submit();
+            <% //session.setAttribute((String)session.getAttribute("tableno"),request.getRequestURI()); %>
+           });
            
             
         </script>        
