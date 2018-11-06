@@ -39,12 +39,23 @@ $("input[type=checkbox]").on("click",function(){
    var i=this.name;
    i=i.substring(1);
    //alert(i);
+   var pr=String(prompt("Do you want to remove this item?"));
+   if(pr.toLowerCase().indexOf("yes")>=0){
    total-=$("input[name=p"+i+"]").val();
    $("input[name=total]").val(total+"");
    $("#r"+i).remove();
    fun();
+   }
+   else $("input[name=c"+i+"]").prop("checked",true);
 });
 function fun(){
    var tempf=$(".sr");
 for(var i=0;i<tempf.length;i++) tempf[i].value=i+1+"."; 
 }
+$(".btn-warning").click(function(){
+    window.location.href="index.html";
+});
+$("#submit").click(function(){
+    document.forms[0].submit();
+});
+

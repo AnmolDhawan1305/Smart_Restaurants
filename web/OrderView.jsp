@@ -54,14 +54,31 @@
         </div>
         <%
            // int k=1;
+           //if(session.getAttribute("prev")!=null) session.removeAttribute("orderId");
+           if(session.getAttribute("orderId")!=null){
+               
+               ResultSet rs=DBL.DBlayer.getResult("select m.item_id,m.item_name,m.price,od.qty,od.delievered from menu1 m,order_detail od where m.item_id=od.item_id and od.order_id="+session.getAttribute("orderId"));
+           while(rs.next()){
+                 if(rs.getString(5)!=null && rs.getString(5).equals("1"))
+                   out.print("<div class='row' id='r"+rs.getString(1)+"'><br><div class='col-lg-1'><input type='text' class='sr' style='width: 50px;text-align:center' disabled></div><div class='col-lg-2'>"+rs.getString(2)+"</div><div class='col-lg-1'><input type='text' name='u"+rs.getString(1)+"' value='"+rs.getString(3)+"' style='width: 70px;text-align:center;' disabled></div>&nbsp;<div class='col-lg-2'><button class='pl' id='pl"+rs.getString(1)+"' disabled><i class='fas fa-plus'></i></button>&nbsp;<input type='text' name='t"+rs.getString(1)+"' value='"+rs.getString(4)+"' style='width: 50px; text-align:center' disabled>&nbsp;<button class='ms' id='m"+rs.getString(1)+"' disabled><i class='fas fa-minus'></i></button></div><div class='col-lg-1'><input type='text' name='p"+rs.getString(1)+"' class='prc' value='"+(Integer.parseInt(rs.getString(3))*Integer.parseInt(rs.getString(4)))+"' style='width: 70px; text-align: center' disabled></div><div class='col-lg-1'>Delievered</div>"+"<div class='col-lg-1'><input type='checkbox' name='c"+rs.getString(1)+"' value='1' checked disabled></div></div>");
+              // k++;
+                  else 
+                    out.print("<div class='row' id='r"+rs.getString(1)+"'><br><div class='col-lg-1'><input type='text' class='sr' style='width: 50px;text-align:center' disabled></div><div class='col-lg-2'>"+rs.getString(2)+"</div><div class='col-lg-1'><input type='text' name='u"+rs.getString(1)+"' value='"+rs.getString(3)+"' style='width: 70px;text-align:center;' disabled></div>&nbsp;<div class='col-lg-2'><button class='pl' id='pl"+rs.getString(1)+"' disabled><i class='fas fa-plus'></i></button>&nbsp;<input type='text' name='t"+rs.getString(1)+"' value='"+rs.getString(4)+"' style='width: 50px; text-align:center' disabled>&nbsp;<button class='ms' id='m"+rs.getString(1)+"' disabled><i class='fas fa-minus'></i></button></div><div class='col-lg-1'><input type='text' name='p"+rs.getString(1)+"' class='prc' value='"+(Integer.parseInt(rs.getString(3))*Integer.parseInt(rs.getString(4)))+"' style='width: 70px; text-align: center' disabled></div><div class='col-lg-1'>Not Delievered</div>"+"<div class='col-lg-1'><input type='checkbox' name='c"+rs.getString(1)+"' value='1' checked disabled></div></div>");
+           }
+           }
+           
+           out.print("<form action='placeOrder.jsp' method='get'>");
+           //Write code here if parameter has already set values
            ResultSet rs=DBL.DBlayer.getResult("select item_id,item_name,price from menu1");
            while(rs.next()){
                if(request.getParameter(rs.getString(1))!=null && (request.getParameter(rs.getString(1)).equals("1")) || (request.getParameter("c"+rs.getString(1))!=null && request.getParameter("c"+rs.getString(1)).equals("1"))){
-                   out.print("<div class='row' id='r"+rs.getString(1)+"'><br><div class='col-lg-1'><input type='text' class='sr' style='width: 50px;text-align:center' disabled></div><div class='col-lg-2'>"+rs.getString(2)+"</div><div class='col-lg-1'><input type='text' name='u"+rs.getString(1)+"' value='"+rs.getString(3)+"' style='width: 70px;text-align:center;' disabled></div>&nbsp;<div class='col-lg-2'><button class='pl' id='pl"+rs.getString(1)+"'><i class='fas fa-plus'></i></button>&nbsp;<input type='text' name='t"+rs.getString(1)+"' value='1' style='width: 50px; text-align:center' disabled>&nbsp;<button class='ms' id='m"+rs.getString(1)+"'><i class='fas fa-minus'></i></button></div><div class='col-lg-1'><input type='text' name='p"+rs.getString(1)+"' class='prc' value='"+rs.getString(3)+"' style='width: 70px; text-align: center' disabled></div><div class='col-lg-1'>Not Delieverd</div>"+"<div class='col-lg-1'><input type='checkbox' name='c"+rs.getString(1)+"' value='1' checked></div></div>");
+                   out.print("<div class='row' id='r"+rs.getString(1)+"'><br><div class='col-lg-1'><input type='text' class='sr' style='width: 50px;text-align:center' disabled></div><div class='col-lg-2'>"+rs.getString(2)+"</div><div class='col-lg-1'><input type='text' name='u"+rs.getString(1)+"' value='"+rs.getString(3)+"' style='width: 70px;text-align:center;' disabled></div>&nbsp;<div class='col-lg-2'><button class='pl' id='pl"+rs.getString(1)+"' type='button'><i class='fas fa-plus'></i></button>&nbsp;<input type='text' name='t"+rs.getString(1)+"' value='1' style='width: 50px; text-align:center' readonly>&nbsp;<button class='ms' id='m"+rs.getString(1)+"' type='button'><i class='fas fa-minus'></i></button></div><div class='col-lg-1'><input type='text' name='p"+rs.getString(1)+"' class='prc' value='"+rs.getString(3)+"' style='width: 70px; text-align: center' disabled></div><div class='col-lg-1'>Not Delieverd</div>"+"<div class='col-lg-1'><input type='checkbox' name='c"+rs.getString(1)+"' value='1' checked></div></div>");
               // k++;
-               }
-              //Write code here if parameter has already set values
+               
+               
            }
+           }
+           out.print("</form>");  
             %>
             <br>
              <div id="ll">
@@ -71,7 +88,17 @@
                 </label> &nbsp; &nbsp;  &nbsp; &nbsp;
             <span > <button id="add" title="Add more Items"><i class='fas fa-plus'></i></button></span>
              </div>
+            <br><br>
+            <br>
+                <button type="button" class="btn btn-warning" name='cancel' style="float:left">Cancel Order</button>
+                <button type="button" class="btn btn-info" id="submit" style="margin-right:200px" >Place Order</button>
+                 <button type="button" class="btn btn-primary"style="margin-left: 50px" >I am done with my food</button>
+                <script type="text/javascript" src="javascript/Order.js"></script>  
+            
         </div>
-          <script type="text/javascript" src="javascript/Order.js"></script>  
-    </body>
+           <% 
+               if(session.getAttribute("orderId")!=null)
+                    out.print("<script type='text/javascript'>$('.btn-warning').prop('disabled',true);</script>");
+               %>
+        </body>
 </html>
