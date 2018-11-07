@@ -12,11 +12,11 @@ $("input[name=total]").val(total+"");
 $(".pl").on("click",function(){
     var i=this.id;
     i=i.substring(2);
-    var t=Number($("input[name=t"+i+"]").val());
-    $("input[name=t"+i+"]").val(t+1+"");
+    var t=Number($("form input[name=t"+i+"]").val());
+    $("form input[name=t"+i+"]").val(t+1+"");
     //var p=Number($("input[name=p"+i+"]").val());
-    var u=Number($("input[name=u"+i+"]").val());
-    $("input[name=p"+i+"]").val(u*(t+1)+"");
+    var u=Number($("form input[name=u"+i+"]").val());
+    $("form input[name=p"+i+"]").val(u*(t+1)+"");
     total+=u;
     $("input[name=total]").val(total+"");
 });
@@ -25,12 +25,12 @@ $(".ms").on("click",function(){
     var i=this.id;
     i=i.substring(1);
     //alert(i);
-    var t=Number($("input[name=t"+i+"]").val());
+    var t=Number($("form input[name=t"+i+"]").val());
    // alert(t);
     if(t>1){
-    $("input[name=t"+i+"]").val((t-1)+"");
-    var u=Number($("input[name=u"+i+"]").val());
-    $("input[name=p"+i+"]").val(u*(t-1)+"");
+    $("form input[name=t"+i+"]").val((t-1)+"");
+    var u=Number($("form input[name=u"+i+"]").val());
+    $("form input[name=p"+i+"]").val(u*(t-1)+"");
      total-=u;
     $("input[name=total]").val(total+"");
     }
@@ -58,4 +58,5 @@ $(".btn-warning").click(function(){
 $("#submit").click(function(){
     document.forms[0].submit();
 });
+
 
