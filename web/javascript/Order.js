@@ -3,6 +3,8 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
+var c=window.location.href;
+c=c.substr(c.indexOf("?")+1); 
 var temp=$(".sr");
 for(var i=0;i<temp.length;i++) temp[i].value=i+1+"."; 
 var total=Number(0);
@@ -45,8 +47,11 @@ $("input[type=checkbox]").on("click",function(){
    $("input[name=total]").val(total+"");
    $("#r"+i).remove();
    fun();
+   c=c.replace(i+"=1&","");
+   alert(c);
    }
    else $("input[name=c"+i+"]").prop("checked",true);
+  
 });
 function fun(){
    var tempf=$(".sr");
@@ -58,5 +63,5 @@ $(".btn-warning").click(function(){
 $("#submit").click(function(){
     document.forms[0].submit();
 });
-
+$('#add').click(function(){ window.location.href='Menu.jsp?'+c;});
 
