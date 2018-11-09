@@ -3,6 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
+
 var c=window.location.href;
 c=c.substr(c.indexOf("?")+1); 
 var temp=$(".sr");
@@ -15,12 +16,15 @@ $(".pl").on("click",function(){
     var i=this.id;
     i=i.substring(2);
     var t=Number($("form input[name=t"+i+"]").val());
+  if(t<Number($("input[type=hidden][name=h"+i+"]").val())){
     $("form input[name=t"+i+"]").val(t+1+"");
     //var p=Number($("input[name=p"+i+"]").val());
     var u=Number($("form input[name=u"+i+"]").val());
     $("form input[name=p"+i+"]").val(u*(t+1)+"");
     total+=u;
     $("input[name=total]").val(total+"");
+    }
+    else alert('You have reached max limit of available qty of this item.');
 });
 
 $(".ms").on("click",function(){
@@ -48,7 +52,6 @@ $("input[type=checkbox]").on("click",function(){
    $("#r"+i).remove();
    fun();
    c=c.replace(i+"=1&","");
-   alert(c);
    }
    else $("input[name=c"+i+"]").prop("checked",true);
   
@@ -63,5 +66,9 @@ $(".btn-warning").click(function(){
 $("#submit").click(function(){
     document.forms[0].submit();
 });
-$('#add').click(function(){ window.location.href='Menu.jsp?'+c;});
+$('#add').click(function(){ 
+    
+    window.location.href='Menu.jsp?'+c;
+    
+});
 
