@@ -73,6 +73,7 @@ background: linear-gradient(to right, #6dd5ed, #2193b0); /* W3C, IE 10+/ Edge, F
            //if(session.getAttribute("tableno")!=null) session.removeAttribute("tableno");
             session.setAttribute("tableno",request.getParameter("tableN"));
             %>
+            
         <nav class="navbar navbar-inverse navbar-fixed-top">
 		<div class="container">
 			<div class="navbar-header">
