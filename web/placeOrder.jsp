@@ -36,13 +36,14 @@
             else{
                 boolean b=false;
              ResultSet rs=DBL.DBlayer.getResult("select item_id from menu1");
+             String h=DBL.DBlayer.getScalar("select max(itr) from order_detail where order_id="+session.getAttribute("orderId"));
             while(rs.next()){
-                String h=DBL.DBlayer.getScalar("select max(icount) from order_detail where order_id="+session.getAttribute("orderId")+" and item_id="+rs.getString(1));
+                
             if(request.getParameter("c"+rs.getString(1))!=null){
                 if(h==null)
                     DBL.DBlayer.executeq("insert into order_detail(order_id,item_id,qty) values("+session.getAttribute("orderId")+","+rs.getString(1)+","+request.getParameter("t"+rs.getString(1))+")");
                 else
-                    DBL.DBlayer.executeq("insert into order_detail(order_id,item_id,qty,icount) values("+session.getAttribute("orderId")+","+rs.getString(1)+","+request.getParameter("t"+rs.getString(1))+","+(Integer.parseInt(h)+1)+")");
+                    DBL.DBlayer.executeq("insert into order_detail(order_id,item_id,qty,itr) values("+session.getAttribute("orderId")+","+rs.getString(1)+","+request.getParameter("t"+rs.getString(1))+","+(Integer.parseInt(h)+1)+")");
                 b=true;
                 DBL.DBlayer.executeq("update menu1 set maxqty=maxqty-"+request.getParameter("t"+rs.getString(1))+" where item_id="+rs.getString(1));
                 DBL.DBlayer.executeq("update menu1 set availabilty=0 where maxqty=0");

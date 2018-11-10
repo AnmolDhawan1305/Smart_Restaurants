@@ -28,6 +28,7 @@ background: -webkit-linear-gradient(to right, #ffd452, #544a7d);  /* Chrome 10-2
 background: linear-gradient(to right, #ffd452, #544a7d); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
 
     }
+  
 </style>
     </head>
     <body>
@@ -72,12 +73,12 @@ background: linear-gradient(to right, #ffd452, #544a7d); /* W3C, IE 10+/ Edge, F
                     &nbsp; &nbsp;
                     <th style="padding-left: 30px">Enter Username</th>
                     &nbsp; &nbsp;
-                    <td><input type="text" name="t1" value="" style="width: 150px"></td>
+                    <td><input type="text" name="t1" value="" style="width: 150px" required></td>
                 </tr>
                 
                 <tr>
                    <th style="padding-left: 30px">Enter Password</th>
-                    <td><input type="password" align="center" name="t2" value="" style="width: 150px"></td> 
+                   <td><input type="password" align="center" name="t2" value="" style="width: 150px" required></td> 
                 </tr>
                 <tr>
                     <td align="center"><input type="submit" align="center" name="b1" value="Submit"></td>
@@ -88,9 +89,26 @@ background: linear-gradient(to right, #ffd452, #544a7d); /* W3C, IE 10+/ Edge, F
             </table>
         </td>
                 </tr>
-        </div>
+        
         <%
             //Check validity of password
-            %>
+            if(request.getParameter("t1")!=null){
+            String u=DBL.DBlayer.getScalar("select username from order_attendant where username='"+request.getParameter("t1")+"'");
+            if(u==null) out.print("<script type='text/javascript'>alert('Invalid username');</script>");  
+            else{
+            String p=DBL.DBlayer.getScalar("select password from order_attendant where username='"+request.getParameter("t1")+"'");
+            if(!p.equals(request.getParameter("t2")))
+                out.print("<script type='text/javascript'>alert('Invalid Password');</script>");
+            else{
+                String name=DBL.DBlayer.getScalar("select name from order_attendant where username='"+request.getParameter("t1")+"'");
+                 //
+                response.sendRedirect("OrderAttendantView.jsp?name="+name);
+            }
+            }
+            }
+        %>
+            </table>
+        </div>
+        
     </body>
 </html>
