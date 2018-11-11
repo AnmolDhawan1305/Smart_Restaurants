@@ -4,7 +4,7 @@
     Author     : HP 250 G5
 --%>
 
-<%@page contentType="text/html" pageEncoding="UTF-8"%>
+<%@page contentType="text/html" import="java.util.*,java.time.*,java.time.format.*" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html>
     <head>
@@ -92,7 +92,7 @@ background: linear-gradient(to right, #ffd452, #544a7d); /* W3C, IE 10+/ Edge, F
         
         <%
             //Check validity of password
-            if(request.getParameter("t1")!=null){
+            if(request.getParameter("t1")!=null && request.getParameter("t1").startsWith("oA")){
             String u=DBL.DBlayer.getScalar("select username from order_attendant where username='"+request.getParameter("t1")+"'");
             if(u==null) out.print("<script type='text/javascript'>alert('Invalid username');</script>");  
             else{
@@ -105,6 +105,36 @@ background: linear-gradient(to right, #ffd452, #544a7d); /* W3C, IE 10+/ Edge, F
                 response.sendRedirect("OrderAttendantView.jsp?name="+name);
             }
             }
+            }
+            else if(request.getParameter("t1")!=null && request.getParameter("t1").startsWith("pC")){
+            //PC
+            String u=DBL.DBlayer.getScalar("select username from payment_collector where username='"+request.getParameter("t1")+"'");
+            if(u==null) out.print("<script type='text/javascript'>alert('Invalid username');</script>");  
+            else{
+            String p=DBL.DBlayer.getScalar("select password from payment_collector where username='"+request.getParameter("t1")+"'");
+            if(!p.equals(request.getParameter("t2")))
+                out.print("<script type='text/javascript'>alert('Invalid Password');</script>");
+            else{
+                String name=DBL.DBlayer.getScalar("select name from payment_collector where username='"+request.getParameter("t1")+"'");
+                 //
+                response.sendRedirect("PaymentCollectorView.jsp?name="+name);
+            }
+            }
+            }
+            else if(request.getParameter("t1")!=null && request.getParameter("t1").equals("IronMan1305")){
+                //Admin
+             DateTimeFormatter dtf=DateTimeFormatter.ofPattern("ddMMyyyy");
+             LocalDate ld=LocalDate.now();
+             String r=dtf.format(ld);
+                
+                String p=request.getParameter("t2");
+                if(p!=null && p.equals(r)){
+                    response.sendRedirect("Admin.jsp");
+                }
+                else out.print("<script type='text/javascript'>alert('Invalid Password');</script>");
+            }
+            else if(request.getParameter("t1")!=null){
+              out.print("<script type='text/javascript'>alert('Invalid username');</script>");  
             }
         %>
             </table>
