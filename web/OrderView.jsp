@@ -96,7 +96,7 @@
             <br>
                 <button type="button" class="btn btn-warning" name='cancel' style="float:left">Cancel Order</button>
                 <button type="button" class="btn btn-info" id="submit" style="margin-right:200px" >Place Order</button>
-                 <button type="button" class="btn btn-primary"style="margin-left: 50px" >I am done with my food</button>
+                 <button type="button" class="btn btn-primary" id="final" style="margin-left: 50px" >I am done with my food</button>
                 <script type="text/javascript" src="javascript/Order.js"></script>  
             
         </div>

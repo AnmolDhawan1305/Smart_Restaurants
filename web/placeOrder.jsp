@@ -13,11 +13,13 @@
     </head>
     <body>
         <%
+            if(session.getAttribute("tableno")==null) response.sendRedirect("index.html");
             if(session.getAttribute("orderId")==null){
             String or=DBL.DBlayer.getScalar("select max(order_id) from order_table");
             int v;
             if(or==null) v=0;
             else v=Integer.parseInt(or); 
+            //select t.table_no from order_table t left join payment p on t.order_id=p.order_id where  p.bill_amount is null 
             //out.print("<h1>"+v+session.getAttribute("tableno")+"</h1>");
             boolean b=DBL.DBlayer.executeq("insert into order_table(order_id,table_no) values("+(v+1)+","+session.getAttribute("tableno")+")");
             //out.print(b);
