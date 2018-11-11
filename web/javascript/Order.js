@@ -71,4 +71,6 @@ $('#add').click(function(){
     window.location.href='Menu.jsp?'+c;
     
 });
-
+$('.btn-primary').click(function(){
+    window.location.href='BillDisplay.jsp';
+});
