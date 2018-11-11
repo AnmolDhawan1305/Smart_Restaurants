@@ -73,13 +73,14 @@
 					<li><a href="Contact.html">Contact</a></li>
 				</ul>
 				<ul class="nav navbar-nav navbar-right">
-					<li><a href="sign_in.jsp"><i class="fas fa-user"></i> Sign in</a></li>
-				</ul>
+					<li><a href="sign_in.jsp"><i class="fas fa-user"></i> Sign out</a></li>
+                                        <li><a href='quantL.jsp?name=<%=request.getParameter("name") %>'><i class="fas fa-angle-up"></i> Set Quantity Limit</a>
+                                </ul>
 			</div>
 		</div>
 	</nav>
         <%
-            out.print("<script type='text/javascript'>alert('Login Sucessfull');</script>");
+            //out.print("<script type='text/javascript'>alert('Login Sucessfull');</script>");
             out.print("<h1>Welcome "+request.getParameter("name")+"</h1>");
             out.print("<h2>Orders</h2>"); 
             out.print("<div id='orders'>");
