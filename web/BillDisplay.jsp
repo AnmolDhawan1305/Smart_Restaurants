@@ -14,7 +14,7 @@
 	<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.4.1/css/all.css" integrity="sha384-5sAR7xN1Nv6T6+dT2mhtzEpVJvfS3NScPQTrOxhwjIuvcA67KV2R5Jz6kr4abQsz" crossorigin="anonymous">
 	<script src="https://code.jquery.com/jquery-2.1.4.js"></script>
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>	
-<link rel="stylesheet" href="css/BIllDisplay.css">
+<link rel="stylesheet" href="css/BillDisplay.css">
 
     </head>
     <body>
@@ -42,5 +42,23 @@
 		</div>
 	</nav>
         <h1>Your Bill</h1>
+        <div id="tabl">
+            <table border="1"><tr>
+            <th>Sr no.</th>
+            <th>Item Name</th>
+            <th style="width: 100px">Price per unit</th>
+            <th>Qty</th>
+            <th>Price</th></tr>
+             <%
+                 if(session.getAttribute("orderId")==null) response.sendRedirect("index.html");
+                 ResultSet rs=DBL.DBlayer.getResult("select m.item_name,m.price,sum(o.qty),sum(o.qty)*m.price from order_detail o,menu1 m where o.item_id=m.item_id and o.order_id="+session.getAttribute("orderId")+" and o.delievered=1 group by o.item_id");
+                 int k=1;
+                 while(rs.next()){
+                    out.print("<tr><td>"+k+".</td><td>"+rs.getString(1)+"</td><td>"+rs.getString(2)+"</td><td>"+rs.getString(3)+"</td><td>"+rs.getString(4)+"</td></tr>");
+                    k++;
+                 }
+                 %>
+        </table>
+        </div>
     </body>
 </html>

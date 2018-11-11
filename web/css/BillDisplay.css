@@ -11,3 +11,12 @@ h1{
     text-align: center;
     margin-top: 5%;
 }
+#tabl{
+    margin-left: 35%;
+}
+table{
+    width: 500px;
+}
+th{
+    text-align: center;
+}
