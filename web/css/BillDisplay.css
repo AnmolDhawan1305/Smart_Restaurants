@@ -13,9 +13,11 @@ h1{
 }
 #tabl{
     margin-left: 35%;
+    
 }
 table{
     width: 500px;
+    text-align: center;
 }
 th{
     text-align: center;
