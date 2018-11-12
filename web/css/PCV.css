@@ -1,0 +1,29 @@
+/*
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+*/
+/* 
+    Created on : 12 Nov, 2018, 7:55:44 PM
+    Author     : HP 250 G5
+*/
+h1{
+        text-align: center;
+        margin-top: 5%;
+    }
+ h2{
+        text-align: center;
+    }
+    table[name="tab"]{
+        width: 500px;
+        text-align: center;
+        margin-left: 520px;
+    }
+    table{
+        text-align: center;
+        margin-left: 670px;
+        width: 200px;
+    }
+    th{
+        text-align: center;
+    }

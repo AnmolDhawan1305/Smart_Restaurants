@@ -98,23 +98,28 @@
             String prev=null;
             String prevo=null;
             String previ=null;
+            int i=1;
             ResultSet rs2=DBL.DBlayer.getResult("select m.item_name,d.qty,d.order_id,t.table_no,d.itr from menu1 m,order_table t,order_detail d where t.order_id=d.order_id and m.item_id=d.item_id and t.activity=1 and d.delievered=0 ");
             int k=1;
+            boolean b=false;
             while(rs2.next()){
                 if(rs2.getString(4)==null) continue;
+                b=true;
                 if(prev==null){
                     out.print("<hr>");
                     out.print("<h3>Table Number: "+rs2.getString(4)+"</h3>");
-                    out.print("<table border=1><tr><th>Sr No.</th><th>Item Name</th><th>Qty</th></tr>&nbsp;&nbsp;&nbsp;&nbsp;");
+                    out.print("<table border=1 name=f"+i+"><tr><th>Sr No.</th><th>Item Name</th><th>Qty</th></tr>&nbsp;&nbsp;&nbsp;&nbsp;");
                     
                 }
                 else{
                     if(!prev.equals(rs2.getString(4))){
                         out.print("</table><br>");
-                        out.print("<button type='button' class='btn btn-primary' name='"+prevo+"' value='"+previ+"'>Ready</button>");
+                        out.print("<button type='button' class='btn btn-primary' name='"+prevo+"' value='"+previ+"' id='f"+(i)+"'>Ready</button>");
                         out.print("<hr><h3>Table Number: "+rs2.getString(4)+"</h3>");
-                         out.print("<table border=1><tr><th>Sr No.</th><th>Item Name</th><th>Qty</th></tr>&nbsp;&nbsp;&nbsp;&nbsp;");
+                        i++; 
+                        out.print("<table border=1 name=f"+i+"><tr><th>Sr No.</th><th>Item Name</th><th>Qty</th></tr>&nbsp;&nbsp;&nbsp;&nbsp;");
                        k=1;
+                       
                     }
                         }
                out.print("<tr><td>"+k+".</td><td>"+rs2.getString(1)+"</td><td>"+rs2.getString(2)+"</td></tr>");
@@ -122,9 +127,10 @@
                 prev=rs2.getString(4);
                 prevo=rs2.getString(3);
                 previ=rs2.getString(5);
+                
             }
             out.print("</table><br>");
-            out.print("<button type='button' class='btn btn-primary' name='"+prevo+"' value='"+previ+"'>Ready</button>");
+            if(b) out.print("<button type='button' class='btn btn-primary' name='"+prevo+"' value='"+previ+"' id='f"+i+"'>Ready</button>");
                         
             //}
             out.print("</div>");
@@ -133,8 +139,10 @@
                 $('button').click(function(){
                    var o=this.name;
                    var i=this.value;
-                   
+                   var f=this.id;
+                   $("table[name="+f+"]").fadeOut(1000,function(){
                    window.location.href+="&del=1"+"&oid="+o+"&itr="+i;
+               }); 
                 });
             </script>
     </body>

@@ -1,6 +1,6 @@
 <%-- 
-    Document   : BillDisplay
-    Created on : 11 Nov, 2018, 11:18:33 PM
+    Document   : BillDisplay2
+    Created on : 12 Nov, 2018, 5:59:49 PM
     Author     : HP 250 G5
 --%>
 
@@ -60,23 +60,12 @@
                     sum+=Integer.parseInt(rs.getString(4));
                     k++;
                  }
-                 out.print("<tr><td colspan='4'>Grand Total</td><td>"+sum+"</td></tr>");
-                 %>
+                 out.print("<tr><td colspan='4'>Grand Total</td><td>"+sum+"</td></tr></table>");
+                 DBL.DBlayer.executeq("insert into payment values("+session.getAttribute("orderId")+","+sum+",curdate(),'"+request.getParameter("s")+"',0)");
+                 out.print("<br><br><h3  style='align:center'>Our Payment Collector will come to you shortly</h3>");    
+            //Feedback
+%>
                 
-        </table>
-                 <br><br>
-                 <form action="BillDisplay2.jsp" method="get">
-             <label><h4>Choose mode of payment&nbsp;
-                <select name="s">
-                    
-                    <option  value="Cash" selected>Cash</option>
-                    <option  value="Card">Card</option>
-                </select> 
-                 </h4>
-             </label>
-                 &nbsp;&nbsp;&nbsp;
-                 <button type="submit" class="btn btn-info">Pay</button>    
-                 </form>
-        </div>
-    </body>
-</html>
+                
+        
+                 

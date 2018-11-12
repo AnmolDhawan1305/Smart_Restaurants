@@ -18,7 +18,14 @@ h1{
 table{
     width: 500px;
     text-align: center;
+    
 }
 th{
     text-align: center;
+}
+td{
+    height: 50px;
+}
+form{
+    margin-left:70px;
 }
