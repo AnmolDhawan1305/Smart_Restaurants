@@ -13,7 +13,7 @@
     </head>
     <body>
         <%
-            if(session.getAttribute("tableno")==null) response.sendRedirect("index.html");
+            if(session.getAttribute("tableno")==null){ out.print("<script type='text/javascript'>window.location.href='index.jsp';</script>"); }
             if(session.getAttribute("orderId")==null){
             String or=DBL.DBlayer.getScalar("select max(order_id) from order_table");
             int v;
@@ -28,10 +28,11 @@
             
             ResultSet rs=DBL.DBlayer.getResult("select item_id from menu1");
             while(rs.next()){
-            if(request.getParameter("c"+rs.getString(1))!=null)
+            if(request.getParameter("c"+rs.getString(1))!=null){
                 DBL.DBlayer.executeq("insert into order_detail(order_id,item_id,qty) values("+(v+1)+","+rs.getString(1)+","+request.getParameter("t"+rs.getString(1))+")");
                 DBL.DBlayer.executeq("update menu1 set maxqty=maxqty-"+request.getParameter("t"+rs.getString(1))+" where item_id="+rs.getString(1));
                 DBL.DBlayer.executeq("update menu1 set availabilty=0 where maxqty=0");    
+            }
             }
             session.setAttribute("alert","1");
             }

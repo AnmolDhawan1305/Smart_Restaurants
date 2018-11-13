@@ -153,6 +153,7 @@ background: linear-gradient(to right, #6dd5ed, #2193b0); /* W3C, IE 10+/ Edge, F
                        while(RS.next()){
                            DBL.DBlayer.executeq("update menu1 set maxqty="+request.getParameter(RS.getString(1))+" where item_id="+RS.getString(1));
                            DBL.DBlayer.executeq("update menu1 set availabilty=1 where maxqty>=1");
+                           DBL.DBlayer.executeq("update menu1 set availabilty=0 where maxqty=0");
                        }
                    } 
                    
@@ -258,6 +259,7 @@ background: linear-gradient(to right, #6dd5ed, #2193b0); /* W3C, IE 10+/ Edge, F
                   %>
          
                   <input type="text" name="tex" value="1" class="togg" disabled>
+                  <input type="text" name="name" value='<%=request.getParameter("name") %>' class="togg">
                   </form>
                         
         </div>
