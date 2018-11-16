@@ -64,8 +64,25 @@
                  DBL.DBlayer.executeq("insert into payment values("+session.getAttribute("orderId")+","+sum+",curdate(),'"+request.getParameter("s")+"',0)");
                  out.print("<br><br><h3  style='align:center'>Our Payment Collector will come to you shortly</h3>");    
             //Feedback
+            
 %>
-                
+                <form action="BillDisplay2.jsp" method="get">
+                    
+                    <h3 id="feed">Please give your feedback</h3><br>
+                    <div class="row">
+                        <label><div class="col-lg-5">Enter your name</div>
+                            <div class="col-lg-2"> <input type="text" name="name"></div>
+                        </label><br></div>
+                    <div class="row">
+                        <label><div class="col-lg-5">Enter your email</div>
+                            <div class="col-lg-2"> <input type="email" name="email"></div>
+                        </label><br></div>
+                    <div class="row">
+                        <label><div class="col-lg-5">Enter your phone number</div>
+                            <div class="col-lg-1"> <input type="text" name="pn" style="width: 130px"></div>
+                        </label><br></div>
+                </form>    
+                       
                 
         
                  

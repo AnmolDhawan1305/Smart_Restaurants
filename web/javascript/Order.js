@@ -5,7 +5,9 @@
  */
 
 var c=window.location.href;
-c=c.substr(c.indexOf("?")+1); 
+if(c.indexOf("?")>0)
+    c=c.substr(c.indexOf("?")+1); 
+else c="";
 var temp=$(".sr");
 for(var i=0;i<temp.length;i++) temp[i].value=i+1+"."; 
 var total=Number(0);

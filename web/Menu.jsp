@@ -10,7 +10,7 @@
 <html>
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-        <link rel="stylesheet" type="text/css" href="css\Menu.css">
+        
         <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
 	<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.4.1/css/all.css" integrity="sha384-5sAR7xN1Nv6T6+dT2mhtzEpVJvfS3NScPQTrOxhwjIuvcA67KV2R5Jz6kr4abQsz" crossorigin="anonymous">
         <script src="https://code.jquery.com/jquery-2.1.4.js"></script>
@@ -71,9 +71,9 @@ background: linear-gradient(to right, #6dd5ed, #2193b0); /* W3C, IE 10+/ Edge, F
         <%
             
            //if(session.getAttribute("tableno")!=null) session.removeAttribute("tableno");
-           //if(session.getAttribute("tableno")!=null) out.print("<script type='text/javascript'>alert('"+session.getAttribute("tableno")+"')</script>");
-            session.setAttribute("tableno",request.getParameter("tableN"));
-            
+           
+            if(session.getAttribute("tableno")==null) session.setAttribute("tableno",request.getParameter("tableN"));
+            //if(session.getAttribute("tableno")==null) out.print("<script type='text/javascript'>alert('Session Expired:');</script>");
             %>
             
         <nav class="navbar navbar-inverse navbar-fixed-top">

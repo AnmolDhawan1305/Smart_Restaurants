@@ -13,7 +13,8 @@
     </head>
     <body>
         <%
-            if(session.getAttribute("tableno")==null){ out.print("<script type='text/javascript'>window.location.href='index.jsp';</script>"); }
+            if(session.getAttribute("tableno")==null){ response.sendRedirect("index.html"); }
+            else{
             if(session.getAttribute("orderId")==null){
             String or=DBL.DBlayer.getScalar("select max(order_id) from order_table");
             int v;
@@ -58,7 +59,7 @@
             }
             
             response.sendRedirect("OrderView.jsp");
-            
+            }
             %>
     </body>
 </html>
