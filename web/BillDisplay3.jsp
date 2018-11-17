@@ -1,6 +1,6 @@
 <%-- 
-    Document   : BillDisplay2
-    Created on : 12 Nov, 2018, 5:59:49 PM
+    Document   : BillDisplay3
+    Created on : 17 Nov, 2018, 12:42:52 PM
     Author     : HP 250 G5
 --%>
 
@@ -15,16 +15,6 @@
 	<script src="https://code.jquery.com/jquery-2.1.4.js"></script>
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>	
 <link rel="stylesheet" href="css/BillDisplay.css">
-<link href="css/star-rating.css" media="all" rel="stylesheet" type="text/css" />
-<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js"></script>
-<script src="javascript/star-rating.js" type="text/javascript"></script>
-<style>
-    .glyphicon-minus-sign{
-        display: none;
-    }
-</style>
-    </head>
-    <body>
         <nav class="navbar navbar-inverse navbar-fixed-top">
 		<div class="container">
 			<div class="navbar-header">
@@ -67,46 +57,27 @@
                     sum+=Integer.parseInt(rs.getString(4));
                     k++;
                  }
-                 out.print("<tr><td colspan='4'>Grand Total</td><td>"+sum+"</td></tr></table>");
-                 DBL.DBlayer.executeq("insert into payment values("+session.getAttribute("orderId")+","+sum+",curdate(),'"+request.getParameter("s")+"',0)");
+                 out.print("<tr><td colspan='4'>Grand Total</td><td>"+sum+"</td></tr>");
+                 if(request.getParameter("rating")!=null){
+                     int rating=0;
+                     String r=request.getParameter("rating").toLowerCase();
+                     //out.print("<h1>"+r+"</h1>");
+                     if(r.indexOf("one")>=0) rating=1;
+                     else if(r.indexOf("two")>=0) rating=2;
+                     else if(r.indexOf("three")>=0) rating=3;
+                     else if(r.indexOf("four")>=0) rating=4;
+                     else if(r.indexOf("five")>=0) rating=5;
+                     if(DBL.DBlayer.getScalar("select email from customer where email='"+request.getParameter("email")+"'")==null)
+                        DBL.DBlayer.executeq("insert into customer values('"+request.getParameter("email")+"','"+request.getParameter("name")+"',"+request.getParameter("pn")+","+rating+",curdate())");
+                     else
+                         DBL.DBlayer.executeq("update customer set ph_no="+request.getParameter("pn")+" Reviews="+rating+" date=curdate() where email='"+request.getParameter("email")+"'");
+                 }    
+                    
+             %>
+                
+        </table>
+             <%
                  out.print("<br><br><h3  style='align:center'>Our Payment Collector will come to you shortly</h3>");    
-            //Feedback
-            
-%>
-                <form action="BillDisplay2.jsp" method="get">
-                    
-                    <h3 id="feed">Please give your feedback</h3><br>
-                    <div class="row">
-                        <label><div class="col-lg-5">Enter your name</div>
-                            <div class="col-lg-2"> <input type="text" name="name"></div>
-                        </label><br><br></div>
-                    <div class="row">
-                        <label><div class="col-lg-5">Enter your email</div>
-                            <div class="col-lg-2"> <input type="email" name="email"></div>
-                        </label><br><br></div>
-                    <div class="row">
-                        <label><div class="col-lg-5">Enter your phone number</div>
-                            <div class="col-lg-1"> <input type="text" name="pn" style="width: 130px"></div>
-                        </label></div>
-                    <div class="row">
-                        <label><div class="col-lg-5" style="padding-top: 17%">Rate us </div>
-                            <div class="col-lg-4"><input id="rating-system" type="number" class="rating" min="1" max="5" step="1"></div>
-                        </label><br></div>
-                    <div class="row">
-                        <div class="col-lg-3"><button type="button" style="margin-left: 25%">Submit</button></div>
-                        <div class="col-lg-3"><button type="reset">Reset</button></div>
-                    </div>
-                </form>    
-            </table>
-        </div>
-                <script type="text/javascript">
-                    $("button[type=button]").click(function(){
-                      window.location.href="BillDisplay3.jsp?"+$("form").serialize()+"&rating="+$(".rating-container .caption .label").text();  
-                    });
-                    
-                    </script>
+                 %>
     </body>
 </html>
-                
-        
-                 
