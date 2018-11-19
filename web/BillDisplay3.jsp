@@ -48,8 +48,12 @@
             <th>Qty</th>
             <th>Price</th></tr>
              <%
+                 
                  int sum=0;
                  if(session.getAttribute("orderId")==null) response.sendRedirect("index.html");
+                 else{
+                 String py=DBL.DBlayer.getScalar("select paymentReceived from payment where order_id="+session.getAttribute("orderId"));
+                 if(py!=null && py.equals("1")) response.sendRedirect("thankyou.html");
                  ResultSet rs=DBL.DBlayer.getResult("select m.item_name,m.price,sum(o.qty),sum(o.qty)*m.price from order_detail o,menu1 m where o.item_id=m.item_id and o.order_id="+session.getAttribute("orderId")+" and o.delievered=1 group by o.item_id");
                  int k=1;
                  while(rs.next()){
@@ -72,7 +76,7 @@
                      else
                          DBL.DBlayer.executeq("update customer set ph_no="+request.getParameter("pn")+" Reviews="+rating+" date=curdate() where email='"+request.getParameter("email")+"'");
                  }    
-                    
+                 } 
              %>
                 
         </table>

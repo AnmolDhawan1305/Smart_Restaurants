@@ -149,8 +149,9 @@ background: linear-gradient(to right, #6dd5ed, #2193b0); /* W3C, IE 10+/ Edge, F
                 <br>
                 <% //update maxqty in database
                    if(request.getParameter("tex")!=null){
-                       ResultSet RS=DBL.DBlayer.getResult("select item_id from menu1");
+                       ResultSet RS=DBL.DBlayer.getResult("select item_id,maxqty from menu1");
                        while(RS.next()){
+                           if(request.getParameter(RS.getString(1))!=null && request.getParameter(RS.getString(1)).equals(RS.getString(2))) continue;
                            DBL.DBlayer.executeq("update menu1 set maxqty="+request.getParameter(RS.getString(1))+" where item_id="+RS.getString(1));
                            DBL.DBlayer.executeq("update menu1 set availabilty=1 where maxqty>=1");
                            DBL.DBlayer.executeq("update menu1 set availabilty=0 where maxqty=0");
