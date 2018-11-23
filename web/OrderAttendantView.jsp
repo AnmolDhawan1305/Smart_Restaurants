@@ -99,7 +99,7 @@
             String prevo=null;
             String previ=null;
             int i=1;
-            ResultSet rs2=DBL.DBlayer.getResult("select m.item_name,d.qty,d.order_id,t.table_no,d.itr from menu1 m,order_table t,order_detail d where t.order_id=d.order_id and m.item_id=d.item_id and t.activity=1 and d.delievered=0 ");
+            ResultSet rs2=DBL.DBlayer.getResult("select m.item_name,d.qty,d.order_id,t.table_no,d.itr from menu1 m,order_table t,order_detail d where t.order_id=d.order_id and m.item_id=d.item_id and t.activity=1 and d.delievered=0 order by d.time  ");
             int k=1;
             boolean b=false;
             while(rs2.next()){
@@ -112,7 +112,7 @@
                     
                 }
                 else{
-                    if(!prev.equals(rs2.getString(4))){
+                    if(!prev.equals(rs2.getString(4)) ||!previ.equals(rs2.getString(5))){
                         out.print("</table><br>");
                         out.print("<button type='button' class='btn btn-primary' name='"+prevo+"' value='"+previ+"' id='f"+(i)+"'>Ready</button>");
                         out.print("<hr><h3>Table Number: "+rs2.getString(4)+"</h3>");

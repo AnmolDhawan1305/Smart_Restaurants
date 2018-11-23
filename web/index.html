@@ -74,7 +74,9 @@
 </div>
     <script type="text/javascript">
         $("button").click(function(){
-           document.forms[0].submit(); 
+           if(Number($('input[type=text]').val())<=20)
+                document.forms[0].submit(); 
+           else{ $('input[type=text]').val(""); alert("Invalid Table number");}
         });
         </script>
         

@@ -129,7 +129,7 @@ background: linear-gradient(to right, #ffd452, #544a7d); /* W3C, IE 10+/ Edge, F
                 
                 String p=request.getParameter("t2");
                 if(p!=null && p.equals(r)){
-                    response.sendRedirect("Admin.jsp");
+                    response.sendRedirect("managerRatingsView.jsp");
                 }
                 else out.print("<script type='text/javascript'>alert('Invalid Password');</script>");
             }
