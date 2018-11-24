@@ -19,6 +19,12 @@
     h1{
         text-align: center;
     }
+    .content{
+        margin-left: 33%;
+    }
+    table{
+        width: 700px;
+    }
 </style>
     </head>
     <body>
@@ -49,7 +55,145 @@
 	</nav>
         <h1> Welcome Manager</h1><br>
         <div class="content">
+            <form action="managerRatingsView.jsp" method="get">  
+            <label for="month_start">Month</label> 
+            <select id="month_start" 
+                    name="month" />
+            <option>all</option>
+              <option value="1">January</option>       
+              <option value="2">February</option>       
+              <option value="3">March</option>       
+              <option value="4">April</option>       
+              <option value="5">May</option>       
+              <option value="6">June</option>       
+              <option value="7">July</option>       
+              <option value="8">August</option>       
+              <option value="9">September</option>       
+              <option value="10">October</option>       
+              <option value="11">November</option>       
+              <option value="12">December</option>       
+            </select> -
+            <label for="day_start">Day</label> 
+            <select id="day_start" name="day" />
+              <option>all</option>      
+              <option>1</option>       
+              <option>2</option>       
+              <option>3</option>       
+              <option>4</option>       
+              <option>5</option>       
+              <option>6</option>       
+              <option>7</option>       
+              <option>8</option>       
+              <option>9</option>       
+              <option>10</option>       
+              <option>11</option>       
+              <option>12</option>       
+              <option>13</option>       
+              <option>14</option>       
+              <option>15</option>       
+              <option>16</option>       
+              <option>17</option>       
+              <option>18</option>       
+              <option>19</option>       
+              <option>20</option>       
+              <option>21</option>       
+              <option>22</option>       
+              <option>23</option>       
+              <option>24</option>       
+              <option>25</option>       
+              <option>26</option>       
+              <option>27</option>       
+              <option>28</option>       
+              <option>29</option>       
+              <option>30</option>       
+              <option>31</option>       
+            </select> - 
+            <label for="year_start">Year</label> 
+            <select id="year_start" name="year" />
+            <option>all</option>
+              <option>2009</option>       
+              <option>2010</option>       
+              <option>2011</option>       
+              <option>2012</option>       
+              <option>2013</option>       
+              <option>2014</option>       
+              <option>2015</option>       
+              <option>2016</option>       
+              <option>2017</option>       
+              <option>2018</option>       
+            </select> 
             
+         &nbsp; &nbsp; &nbsp;    
+         <button name="search" type="submit"><i class="fas fa-search"></i></button>
+            &nbsp; &nbsp; &nbsp; 
+            <button type="button" class="btn btn-primary" name="avg">Average Ratings</button>
+            </form><br><br>
+            <table border="1" id="tab">
+                <tr>
+                    <th>Sr NO.</th>
+                    <th>Name</th>
+                    <th>Email</th>
+                    <th>Phone no.</th>
+                    <th>Ratings</th>
+                    <th>Date</th>
+                </tr>
+                <%
+                    if(request.getParameter("day")==null ||(request.getParameter("day").equals("all")&&request.getParameter("month").equals("all")&&request.getParameter("year").equals("all") )){
+                        ResultSet rs=DBL.DBlayer.getResult("select * from customer");
+                        int k=1;
+                        while(rs.next()){
+                            out.print("<tr><td>"+k+".</td><td>"+rs.getString(2)+"</td><td>"+rs.getString(1)+"</td><td>"+rs.getString(3)+"</td><td>"+rs.getString(4)+"</td><td>"+rs.getString(5)+"</td></tr>");
+                            k++;
+                            out.print("<input type=hidden name=t value='"+rs.getString(4)+"' >");
+                        }
+                    }
+                    else{
+                        //HashMap<String, Integer> map = new HashMap<>(); 
+                        //map.put("January",1);
+                        //map.put("Febrauary",1);
+                        //map.put("March",1);
+                        //map.put("April",1);
+                        //map.put("January",1);
+                        //map.put("January",1);
+                        out.print("<script type='text/javascript'>$('#month_start').val('"+request.getParameter("month")+"');"+"$('#day_start').val('"+request.getParameter("day")+"');"+"$('#year_start').val('"+request.getParameter("year")+"');"+"</script>");
+                        String Y=request.getParameter("year");
+                        if(Y!=null&& Y.equals("all")) Y="any(select year(DateR) from customer)";
+                        String M=request.getParameter("month");
+                        if(M!=null&& M.equals("all")) M="any(select month(DateR) from customer)";
+                        String D=request.getParameter("day");
+                        if(D!=null&& D.equals("all")) D="any(select day(DateR) from customer)";
+                        ResultSet rs=DBL.DBlayer.getResult("select * from customer where year(DateR)="+Y+" and month(DateR)="+M+" and day(DateR)="+D);
+                        int k=1;
+                        while(rs.next()){
+                            out.print("<tr><td>"+k+".</td><td>"+rs.getString(2)+"</td><td>"+rs.getString(1)+"</td><td>"+rs.getString(3)+"</td><td>"+rs.getString(4)+"</td><td>"+rs.getString(5)+"</td></tr>");
+                            k++;
+                            out.print("<input type=hidden name=t value='"+rs.getString(4)+"' >");
+                        }   
+                         }
+                    %>
+            </table>
         </div>
+            <script type="text/javascript">
+                $('button[name=avg]').click(function(){
+                    var y=$('#year_start').val();
+                    if(y!='all') y=" Year: "+y;
+                    else y='';
+                    var m=$('#month_start option:selected').text();
+                    if(m!='all') m=" Month: "+m;
+                    else m='';
+                    var d=$('#day_start').val();
+                    if(d!='all') d=" Day: "+d;
+                    else d='';
+                    var x=$('input[type=hidden]');
+                    var sum=0;
+                    for(var i=0;i<x.length;i++) sum+=Number(x[i].value);
+                    var num=sum/x.length;
+                    num=num.toPrecision(2);
+                    alert('Average Ratings in '+m+d+y+' is '+num);
+            });
+            $("select").on("change",function(){
+                document.forms[0].submit();
+            });
+            </script>
     </body>
 </html>
