@@ -1,6 +1,6 @@
 <%-- 
-    Document   : managerRatingsView
-    Created on : 22 Nov, 2018, 9:19:51 PM
+    Document   : managerBillsView
+    Created on : 25 Nov, 2018, 11:50:37 AM
     Author     : HP 250 G5
 --%>
 
@@ -23,7 +23,8 @@
         margin-left: 33%;
     }
     table{
-        width: 600px;
+        margin-left: 7%;
+        width: 500px;
     }
 </style>
     </head>
@@ -55,8 +56,8 @@
 	</nav>
         <h1> Welcome Manager</h1><br>
         <div class="content">
-            <form action="managerRatingsView.jsp" method="get">  
-            <label for="month_start" id="mon">Month</label> 
+            <form action="managerBillsView.jsp" method="get">  
+            <label for="month_start">Month</label> 
             <select id="month_start" 
                     name="month" />
             <option>all</option>
@@ -126,25 +127,24 @@
          &nbsp; &nbsp; &nbsp;    
          <button name="search" type="submit"><i class="fas fa-search"></i></button>
             &nbsp; &nbsp; &nbsp; 
-            <button type="button" class="btn btn-primary" name="avg">Average Ratings</button>
+            <button type="button" class="btn btn-primary" name="avg">Total Amount</button>
             </form><br><br>
             <table border="1" id="tab">
                 <tr>
                     <th>Sr NO.</th>
-                    <th>Name</th>
-                    <th>Email</th>
-                    <th>Phone no.</th>
-                    <th>Ratings</th>
+                    <th>Order Id</th>
+                    <th>Bill Amount</th>
+                    <th>Mode of Payment</th>
                     <th>Date</th>
                 </tr>
                 <%
                     if(request.getParameter("day")==null ||(request.getParameter("day").equals("all")&&request.getParameter("month").equals("all")&&request.getParameter("year").equals("all") )){
-                        ResultSet rs=DBL.DBlayer.getResult("select * from customer");
+                        ResultSet rs=DBL.DBlayer.getResult("select * from payment where paymentReceived=1");
                         int k=1;
                         while(rs.next()){
-                            out.print("<tr><td>"+k+".</td><td>"+rs.getString(2)+"</td><td>"+rs.getString(1)+"</td><td>"+rs.getString(3)+"</td><td>"+rs.getString(4)+"</td><td>"+rs.getString(5)+"</td></tr>");
+                            out.print("<tr><td>"+k+".</td><td>"+rs.getString(1)+"</td><td>"+rs.getString(2)+"</td><td>"+rs.getString(4)+"</td><td>"+rs.getString(3)+"</td></tr>");
                             k++;
-                            out.print("<input type=hidden name=t value='"+rs.getString(4)+"' >");
+                            out.print("<input type=hidden name=t value='"+rs.getString(2)+"' >");
                         }
                     }
                     else{
@@ -157,17 +157,17 @@
                         //map.put("January",1);
                         out.print("<script type='text/javascript'>$('#month_start').val('"+request.getParameter("month")+"');"+"$('#day_start').val('"+request.getParameter("day")+"');"+"$('#year_start').val('"+request.getParameter("year")+"');"+"</script>");
                         String Y=request.getParameter("year");
-                        if(Y!=null&& Y.equals("all")) Y="any(select year(DateR) from customer)";
+                        if(Y!=null&& Y.equals("all")) Y="any(select year(order_date) from payment where paymentReceived=1)";
                         String M=request.getParameter("month");
-                        if(M!=null&& M.equals("all")) M="any(select month(DateR) from customer)";
+                        if(M!=null&& M.equals("all")) M="any(select month(order_date) from payment where paymentReceived=1)";
                         String D=request.getParameter("day");
-                        if(D!=null&& D.equals("all")) D="any(select day(DateR) from customer)";
-                        ResultSet rs=DBL.DBlayer.getResult("select * from customer where year(DateR)="+Y+" and month(DateR)="+M+" and day(DateR)="+D);
+                        if(D!=null&& D.equals("all")) D="any(select day(order_date) from payment where paymentReceived=1)";
+                        ResultSet rs=DBL.DBlayer.getResult("select * from payment where year(order_date)="+Y+" and month(order_date)="+M+" and day(order_date)="+D);
                         int k=1;
                         while(rs.next()){
-                            out.print("<tr><td>"+k+".</td><td>"+rs.getString(2)+"</td><td>"+rs.getString(1)+"</td><td>"+rs.getString(3)+"</td><td>"+rs.getString(4)+"</td><td>"+rs.getString(5)+"</td></tr>");
+                             out.print("<tr><td>"+k+".</td><td>"+rs.getString(1)+"</td><td>"+rs.getString(2)+"</td><td>"+rs.getString(4)+"</td><td>"+rs.getString(3)+"</td></tr>");
                             k++;
-                            out.print("<input type=hidden name=t value='"+rs.getString(4)+"' >");
+                            out.print("<input type=hidden name=t value='"+rs.getString(2)+"' >");
                         }   
                          }
                     %>
@@ -179,7 +179,7 @@
                     if(y!='all') y=" Year: "+y;
                     else y='';
                     var m=$('#month_start option:selected').text();
-                    if(m!='all') m="of Month: "+m;
+                    if(m!='all') m="in Month: "+m;
                     else m='';
                     var d=$('#day_start').val();
                     if(d!='all') d=" Day: "+d;
@@ -187,9 +187,9 @@
                     var x=$('input[type=hidden]');
                     var sum=0;
                     for(var i=0;i<x.length;i++) sum+=Number(x[i].value);
-                    var num=sum/x.length;
-                    num=num.toPrecision(2);
-                    alert('Average Ratings '+m+d+y+' is '+num);
+                    //sum=sum.toPrecision(3);
+                    //sum=Double(sum);
+                    alert('Total amount '+m+d+y+' is '+sum);
             });
             $("select").on("change",function(){
                 document.forms[0].submit();
@@ -197,3 +197,4 @@
             </script>
     </body>
 </html>
+
